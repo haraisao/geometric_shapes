@@ -37,8 +37,10 @@
 #ifndef GEOMETRIC_SHAPES_BODIES_
 #define GEOMETRIC_SHAPES_BODIES_
 
+#ifndef WIN32
 #if __cplusplus <= 199711L
 #error This header requires at least C++11
+#endif
 #endif
 
 #include "geometric_shapes/shapes.h"

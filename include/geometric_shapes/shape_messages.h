@@ -42,8 +42,10 @@
 #include <shape_msgs/Plane.h>
 #include <boost/variant.hpp>
 
+#ifndef WIN32
 #if __cplusplus <= 199711L
 #error This header requires at least C++11 (boost::variant is incompatible between c++98 and c++11 and we enforce 11)
+#endif
 #endif
 
 namespace shapes
