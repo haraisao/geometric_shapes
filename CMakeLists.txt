@@ -54,7 +54,7 @@ if (HAVE_QHULL_2011)
 endif()
 
 include_directories(include)
-include_directories(${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS})
+include_directories(${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} ${QHULL_INCLUDE_DIRS})
 include_directories(${catkin_INCLUDE_DIRS} ${console_bridge_INCLUDE_DIRS})
 
 add_library(${PROJECT_NAME}
@@ -67,6 +67,7 @@ add_library(${PROJECT_NAME}
   src/shapes.cpp
 )
 
+link_directories(${ASSIMP_LIBRARY_DIRS})
 target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${QHULL_LIBRARIES} ${catkin_LIBRARIES} ${console_bridge_LIBRARIES} ${Boost_LIBRARIES})
 
 
@@ -75,9 +76,16 @@ if(CATKIN_ENABLE_TESTING)
   add_subdirectory(test)
 endif()
 
+if(WIN32)
+install(TARGETS ${PROJECT_NAME}
+        ARCHIVE DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION}
+        CONFIGURATIONS Release)
+else()
 install(TARGETS ${PROJECT_NAME}
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+endif()
 
 install(DIRECTORY include/${PROJECT_NAME}/
         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
