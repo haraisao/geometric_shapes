@@ -10,6 +10,7 @@ if (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+find_package(catkin REQUIRED)
 find_package(ASSIMP REQUIRED)
 if (NOT ASSIMP_FOUND)
   find_package(PkgConfig REQUIRED)
@@ -57,6 +58,8 @@ include_directories(include)
 include_directories(${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} ${QHULL_INCLUDE_DIRS})
 include_directories(${catkin_INCLUDE_DIRS} ${console_bridge_INCLUDE_DIRS})
 
+link_directories(${ASSIMP_LIBRARY_DIRS})
+
 add_library(${PROJECT_NAME}
   src/bodies.cpp
   src/body_operations.cpp
@@ -67,7 +70,7 @@ add_library(${PROJECT_NAME}
   src/shapes.cpp
 )
 
-link_directories(${ASSIMP_LIBRARY_DIRS})
+#link_directories(${ASSIMP_LIBRARY_DIRS})
 target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${QHULL_LIBRARIES} ${catkin_LIBRARIES} ${console_bridge_LIBRARIES} ${Boost_LIBRARIES})
 
 
